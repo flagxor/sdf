@@ -1,6 +1,7 @@
 #! /usr/bin/env gforth 
 
 require simplefont/slides.fs
+require samples.fs
 
 : title
   big home
@@ -17,6 +18,11 @@ require simplefont/slides.fs
   *f" Simple Representation but Powerful"
 ;
 
+: distance-field
+  field-slice
+  .title" Motivation"
+;
+
 : questions?
   .title" Questions?"
   font-cr font-cr
@@ -28,6 +34,7 @@ require simplefont/slides.fs
 here
 ' title ,
 ' motivation ,
+' distance-field ,
 ' questions? ,
 slideshow
 

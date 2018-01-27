@@ -2,7 +2,11 @@
 
 require simplefont/grf.fs
 require sdf.fs
-\ require raymarch.fs
+require raymarch.fs
+
+get-current
+vocabulary samples also samples definitions
+( private )
 
 256 constant iwidth
 256 constant iheight
@@ -10,21 +14,18 @@ iwidth iheight * 4 * constant image-size
 
 create disp-image image-size allot
 
+: pheight height 3 4 */ ;
+
 : blt-image
-   0 0 pixel
-   height 0 do
-     width 0 do
-       i iwidth width */ j iheight height */
+   pheight 0 do
+     width pheight - 2/  height pheight - 2/ i + pixel
+     pheight 0 do
+       i iwidth pheight */ j iheight pheight */
        iwidth * + 4 * disp-image + over 4 cmove
        4 +
      loop
+     drop
    loop
-   drop
-;
-
-: draw
-   blt-image
-   flip
 ;
 
 : >byte 255 min 0 max ;
@@ -56,19 +57,12 @@ create disp-image image-size allot
      loop
    loop
    drop
+   blt-image
 ;
 
-: handle-events
-   wait
-   event expose-event = if draw then
-   event press-event = if
-     last-key 13 = if bye then
-     last-key [char] a = if field-slice draw then
-   then
-;
+set-current
+( public )
 
-: main
-   512 512 window
-   begin handle-events again
-;
-main
+: field-slice field-slice ;
+
+previous
