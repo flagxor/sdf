@@ -30,24 +30,12 @@ create disp-image image-size allot
 
 : >byte 255 min 0 max ;
 
-: model
-  gpush
-    128 128 0 translated
-    50 sphere
-  gpop
-  gpush
-    180 100 0 translated
-    30 30 30 box
-  gpop
-  difference
-;
-' model set-model
-
 : field-slice
+   model!
    disp-image
    iheight 0 do
      iwidth 0 do
-       i j 0 set-point
+       i j 0 point!
        distance 2* 2* 2*
        dup >r dup >r
        >byte over c! 1+
@@ -64,5 +52,70 @@ set-current
 ( public )
 
 : field-slice field-slice ;
+
+: sphere-model
+  gpush
+    128 128 0 translated
+    50 sphere
+  gpop
+;
+
+: box-model
+  gpush
+    128 128 0 translated
+    50 50 50 box
+  gpop
+;
+
+: cylinder-model
+  gpush
+    128 128 0 translated
+    50 50 cylinder
+  gpop
+;
+
+: sphere-inverse-model
+  gpush
+    128 128 0 translated
+    50 sphere
+  gpop
+  negate
+;
+
+: difference-model
+  gpush
+    128 128 0 translated
+    50 sphere
+  gpop
+  gpush
+    128 128 0 translated
+    30 sphere
+  gpop
+  difference
+;
+
+: union-model
+  gpush
+    128 128 0 translated
+    50 sphere
+  gpop
+  gpush
+    180 128 0 translated
+    50 sphere
+  gpop
+  union
+;
+
+: intersect-model
+  gpush
+    128 128 0 translated
+    50 sphere
+  gpop
+  gpush
+    180 128 0 translated
+    50 sphere
+  gpop
+  intersect
+;
 
 previous

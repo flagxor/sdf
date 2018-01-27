@@ -23,16 +23,16 @@ create gstack stack-slots cells 3 * allot   variable gsp gstack gsp !
 set-current
 ( public )
 
-: set-point ( x y z -- ) z ! y ! x ! ;
-: set-model ( model -- ) model ! ;
+: point! ( x y z -- ) z ! y ! x ! ;
+: model! ( model -- ) model ! ;
 : distance ( -- n ) model @ execute ;
 
 : sphere ( r -- d )
     x @ square y @ square + z @ square + sqrt swap - ;
-: cylinder ( h r -- d )
-    x @ square y @ square + swap - swap z @ abs - max ;
 : box ( x y z -- d )
-    z @ abs swap - swap y @ abs swap - max swap x @ abs - max ;
+    z @ abs swap - swap y @ abs swap - max swap x @ abs swap - max ;
+: cylinder ( h r -- d )
+    x @ square y @ square + sqrt swap - swap z @ abs swap - max ;
 
 : gpush   x @ >g y @ >g z @ >g ;
 : gpop   g> z ! g> y ! g> x ! ;

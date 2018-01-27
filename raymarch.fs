@@ -14,7 +14,7 @@ set-current
 
 : cast ( x y -- ) ;
 : march ( model -- )
-   0 0 0 set-point
+   0 0 0 point!
    20 0 do dup execute >r 0 0 r> translated loop drop
 ;
 
