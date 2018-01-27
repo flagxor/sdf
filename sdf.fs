@@ -4,7 +4,6 @@ vocabulary sdf also sdf definitions
 
 variable x   variable y   variable z
 variable opposite   variable adjacent   variable hypotenuse
-variable model
 
 20 constant stack-slots
 create gstack stack-slots cells 3 * allot   variable gsp gstack gsp !
@@ -24,8 +23,9 @@ set-current
 ( public )
 
 : point! ( x y z -- ) z ! y ! x ! ;
-: model! ( model -- ) model ! ;
-: distance ( -- n ) model @ execute ;
+: point.   x @ . y @ . z @ . cr ;
+: point-distance x @ square y @ square + z @ square + sqrt ;
+: inflect x @ negate x ! y @ negate y ! z @ negate z ! ;
 
 : sphere ( r -- d )
     x @ square y @ square + z @ square + sqrt swap - ;
@@ -37,6 +37,9 @@ set-current
 : gpush   x @ >g y @ >g z @ >g ;
 : gpop   g> z ! g> y ! g> x ! ;
 
+: left ( n -- ) x +! ;   : right x -! ;
+: back ( n -- ) y +! ;   : forward y -! ;
+: down ( n -- ) z +! ;   : up z -! ;
 : translated ( x y z -- ) z -! y -! x -! ;
 : rotate-z ( x y -- ) anglize x @ cos* y @ sin* - x @ sin* y @ cos* + y ! x ! ;
 : rotate-y ( x z -- ) anglize x @ cos* z @ sin* - x @ sin* z @ cos* + z ! x ! ;
