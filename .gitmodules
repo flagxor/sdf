@@ -1,0 +1,3 @@
+[submodule "simplefont"]
+	path = simplefont
+	url = https://github.com/flagxor/simplefont.git
